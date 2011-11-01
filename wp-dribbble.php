@@ -98,6 +98,7 @@ function wpDribbble_control() {
   if (!is_array( $options )) {
 	$options = array(
 		'playerName'=> 'Your Player Name',
+		'widgetTitle'=> 'Dribbble',
   	'maxItems' => '5',
   	'includeCSS' => true,
   	'dropShadow' => true,
@@ -106,6 +107,7 @@ function wpDribbble_control() {
   }
   if ($_POST['wpDribbble-Submit']) {
     $options['playerName'] = htmlspecialchars($_POST['wpDribbble-WidgetPlayerName']);
+    $options['widgetTitle'] = htmlspecialchars($_POST['wpDribbble-WidgetTitle']);
     $options['maxItems'] = htmlspecialchars($_POST['wpDribbble-WidgetMaxItems']);
     $options['includeCSS'] = htmlspecialchars($_POST['wpDribbble-WidgetIncludeCSS']);
     $options['dropShadow'] = htmlspecialchars($_POST['wpDribbble-WidgetDropShadow']);
@@ -117,6 +119,10 @@ function wpDribbble_control() {
 	.labbbel { width: 90px; display:inline-block; }
 	.quiet { color:#CCC;}
 </style>
+<p>
+    <label class="labbbel" for="wpDribbble-WidgetTitle">Title: </label>
+    <input type="text" id="wpDribbble-WidgetTitle" name="wpDribbble-WidgetTitle" value="<?php echo $options['widgetTitle'];?>" />
+</p>
 <p>
     <label class="labbbel" for="wpDribbble-WidgetPlayerName">Player Name: </label>
     <input type="text" id="wpDribbble-WidgetPlayerName" name="wpDribbble-WidgetPlayerName" value="<?php echo $options['playerName'];?>" />
@@ -159,7 +165,10 @@ function wpDribbble_control() {
 function widget_wpDribbble($args) {
   extract($args);
   echo $before_widget;
-  echo $before_title;?>Dribbble<?php echo $after_title;
+  echo $before_title;
+  $options = get_option("widget_wpDribbble");
+	echo $options['widgetTitle'];
+	echo $after_title;
   wpDribbble();
   echo $after_widget;
 }
